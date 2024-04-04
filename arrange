@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+if [ ! -d "files" ]; then
+    echo "The 'files' directory does not exist in the current path."
+    exit 1
+fi
+
+for file in files/*; do
+    first_letter=$(basename "$file" | awk '{print tolower(substr($0, 1, 1))}')
+
+    if [ ! -d "$first_letter" ]; then
+        mkdir "$first_letter"
+    fi
+
+    mv "$file" "$first_letter/"
+done
+
+echo "Files have been arranged."
+
